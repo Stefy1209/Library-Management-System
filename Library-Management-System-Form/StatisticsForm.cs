@@ -11,6 +11,8 @@ namespace Library_Management_System_Form
             _book = book;       
             
             InitializeComponent();
+
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void StatisticsForm_Load(object sender, EventArgs e)

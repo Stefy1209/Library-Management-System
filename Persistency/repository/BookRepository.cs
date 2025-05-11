@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Model;
 using Persistency.@interface;
 
@@ -12,7 +13,7 @@ public class BookRepository(LmsDbContext context) : IBookRepository
 
     public IEnumerable<Book> FindAll()
     {
-        return context.Books.ToHashSet();
+        return context.Books.Include(book => book.Authors).ToHashSet();
     }
 
     public Book? Save(Book? entity)
@@ -48,12 +49,14 @@ public class BookRepository(LmsDbContext context) : IBookRepository
         if (string.IsNullOrEmpty(title))
             throw new ArgumentException("Title cannot be null.", nameof(title));
 
-        return context.Books.Where(book => book.Title.Contains(title));
+        return context.Books.Include(book => book.Authors).Where(book => book.Title.Contains(title));
     }
 
     public IEnumerable<Book> FindByAuthors(IEnumerable<Author> authors)
     {
-        return context.Books.Where(book => authors.Any(author => author.Books.Contains(book)));       
+        return context.Books.Include(book => book.Authors)
+            .Where(book => book.Authors.Any(author => authors.Select(a => a.Id).Contains(author.Id)))
+            .ToList();
     }
 
     public IEnumerable<Book> FindByTitleAndAuthors(string? title, IEnumerable<Author> authors)
@@ -61,6 +64,8 @@ public class BookRepository(LmsDbContext context) : IBookRepository
         if (string.IsNullOrEmpty(title))
             throw new ArgumentException("Title cannot be null.", nameof(title));
         
-        return context.Books.Where(book => book.Title.Contains(title) && authors.Any(author => author.Books.Contains(book)));       
+        return context.Books.Include(book => book.Authors)
+            .Where(book => book.Title.Contains(title) && book.Authors.Any(author => authors.Select(a => a.Id).Contains(author.Id)))
+            .ToList();       
     }
 }

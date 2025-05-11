@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Model;
 using Persistency.@interface;
 
@@ -12,7 +13,7 @@ public class AuthorRepository(LmsDbContext context) : IAuthorRepository
 
     public IEnumerable<Author> FindAll()
     {
-        return context.Authors.ToHashSet();
+        return context.Authors.Include(author => author.Books).ToHashSet();
     }
 
     public Author? Save(Author? entity)

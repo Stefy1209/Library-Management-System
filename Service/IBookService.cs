@@ -12,5 +12,8 @@ public interface IBookService
     void ReturnBooks(Book book, int amount);
     void ChangeBookTitle(Book book, string title);
     void ChangeBookQuantity(Book book, int quantity);
+    void ChangeBookAuthors(Book book, IEnumerable<Author> authors);
     IEnumerable<Book> SearchForBooks();
+    void SetTitleFilter(string? title);
+    void SetAuthorFilter(IEnumerable<Author> authors);
 }

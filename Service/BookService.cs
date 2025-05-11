@@ -5,8 +5,8 @@ namespace Service;
 
 public class BookService(IBookRepository bookRepository) : IBookService
 {
-    private readonly string? _titleFilter = string.Empty;
-    private readonly ISet<Author> _authorsFilter = new HashSet<Author>();
+    private string? _titleFilter = string.Empty;
+    private ISet<Author> _authorsFilter = new HashSet<Author>();
 
     public void AddBooks(string title, int quantity, IEnumerable<Author> authors)
     {
@@ -57,6 +57,21 @@ public class BookService(IBookRepository bookRepository) : IBookService
         bookRepository.Update(book);       
     }
 
+    public void ChangeBookAuthors(Book book, IEnumerable<Author> authors)
+    {
+        var enumerable = authors.ToList();
+        var authorsToRemove = book.Authors.Except(enumerable).ToList();
+        var authorsToAdd = enumerable.Except(book.Authors).ToList();
+        
+        foreach (var author in authorsToRemove)
+            book.RemoveAuthor(author);
+        
+        foreach (var author in authorsToAdd)
+            book.AddAuthor(author);
+        
+        bookRepository.Update(book);
+    }
+
     public IEnumerable<Book> SearchForBooks()
     {
         if (string.IsNullOrWhiteSpace(_titleFilter) && _authorsFilter.Count == 0)
@@ -71,13 +86,13 @@ public class BookService(IBookRepository bookRepository) : IBookService
         return bookRepository.FindByAuthors(_authorsFilter);
     }
 
-    public void AddAuthorToFilter(Author author)
+    public void SetTitleFilter(string? title)
     {
-        _authorsFilter.Add(author);
+        _titleFilter = title;
     }
 
-    public void RemoveAuthorFromFilter(Author author)
+    public void SetAuthorFilter(IEnumerable<Author> authors)
     {
-        _authorsFilter.Remove(author);
+        _authorsFilter = authors.ToHashSet();
     }
 }

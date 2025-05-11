@@ -39,8 +39,10 @@ public sealed class Book : Entity<Guid>
     
     public void SetQuantity(int quantity)
     {
-        if (quantity < 0)
+        if (quantity <= 0)
             throw new ArgumentOutOfRangeException(nameof(quantity), "Quantity cannot be negative.");
+        if (quantity < LoanedQuantity)
+            throw new InvalidOperationException("Quantity cannot be less than the number of books loaned.");
         Quantity = quantity;
     }
     

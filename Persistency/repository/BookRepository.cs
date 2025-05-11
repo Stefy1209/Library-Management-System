@@ -13,7 +13,10 @@ public class BookRepository(LmsDbContext context) : IBookRepository
 
     public IEnumerable<Book> FindAll()
     {
-        return context.Books.Include(book => book.Authors).ToHashSet();
+        return context.Books
+            .Include(book => book.Authors)
+            .Include(book => book.Statistics)
+            .ToHashSet();
     }
 
     public Book? Save(Book? entity)
@@ -49,12 +52,17 @@ public class BookRepository(LmsDbContext context) : IBookRepository
         if (string.IsNullOrEmpty(title))
             throw new ArgumentException("Title cannot be null.", nameof(title));
 
-        return context.Books.Include(book => book.Authors).Where(book => book.Title.Contains(title));
+        return context.Books
+            .Include(book => book.Authors)
+            .Include(book => book.Statistics)
+            .Where(book => book.Title.Contains(title));
     }
 
     public IEnumerable<Book> FindByAuthors(IEnumerable<Author> authors)
     {
-        return context.Books.Include(book => book.Authors)
+        return context.Books
+            .Include(book => book.Authors)
+            .Include(book => book.Statistics)
             .Where(book => book.Authors.Any(author => authors.Select(a => a.Id).Contains(author.Id)))
             .ToList();
     }
@@ -64,7 +72,9 @@ public class BookRepository(LmsDbContext context) : IBookRepository
         if (string.IsNullOrEmpty(title))
             throw new ArgumentException("Title cannot be null.", nameof(title));
         
-        return context.Books.Include(book => book.Authors)
+        return context.Books
+            .Include(book => book.Authors)
+            .Include(book => book.Statistics)
             .Where(book => book.Title.Contains(title) && book.Authors.Any(author => authors.Select(a => a.Id).Contains(author.Id)))
             .ToList();       
     }

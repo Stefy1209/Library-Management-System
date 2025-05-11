@@ -26,5 +26,12 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
         builder.HasMany(book => book.Authors)
             .WithMany(author => author.Books)
             .UsingEntity(j => j.ToTable("BookAuthor"));
+        
+        builder.Navigation(book => book.Statistics);
+
+        builder.HasOne(book => book.Statistics)
+            .WithOne(statistics => statistics.Book)
+            .HasForeignKey<Statistics>(statistics => statistics.BookId)
+            .IsRequired();
     }
 }

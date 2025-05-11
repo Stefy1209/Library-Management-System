@@ -38,6 +38,7 @@
             addBookButton = new Button();
             removeBookButton = new Button();
             modifyBookButton = new Button();
+            statisticsButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridViewBooks).BeginInit();
             SuspendLayout();
             // 
@@ -88,7 +89,7 @@
             // 
             // searchBookButton
             // 
-            searchBookButton.Location = new Point(1060, 116);
+            searchBookButton.Location = new Point(1048, 76);
             searchBookButton.Name = "searchBookButton";
             searchBookButton.Size = new Size(498, 58);
             searchBookButton.TabIndex = 6;
@@ -98,7 +99,7 @@
             // 
             // loanBookButton
             // 
-            loanBookButton.Location = new Point(1060, 180);
+            loanBookButton.Location = new Point(1048, 140);
             loanBookButton.Name = "loanBookButton";
             loanBookButton.Size = new Size(498, 58);
             loanBookButton.TabIndex = 7;
@@ -108,7 +109,7 @@
             // 
             // returnBookButton
             // 
-            returnBookButton.Location = new Point(1060, 244);
+            returnBookButton.Location = new Point(1048, 204);
             returnBookButton.Name = "returnBookButton";
             returnBookButton.Size = new Size(498, 58);
             returnBookButton.TabIndex = 8;
@@ -118,7 +119,7 @@
             // 
             // addBookButton
             // 
-            addBookButton.Location = new Point(1060, 308);
+            addBookButton.Location = new Point(1048, 268);
             addBookButton.Name = "addBookButton";
             addBookButton.Size = new Size(498, 58);
             addBookButton.TabIndex = 9;
@@ -128,7 +129,7 @@
             // 
             // removeBookButton
             // 
-            removeBookButton.Location = new Point(1060, 372);
+            removeBookButton.Location = new Point(1048, 332);
             removeBookButton.Name = "removeBookButton";
             removeBookButton.Size = new Size(498, 58);
             removeBookButton.TabIndex = 10;
@@ -138,7 +139,7 @@
             // 
             // modifyBookButton
             // 
-            modifyBookButton.Location = new Point(1060, 436);
+            modifyBookButton.Location = new Point(1048, 396);
             modifyBookButton.Name = "modifyBookButton";
             modifyBookButton.Size = new Size(495, 58);
             modifyBookButton.TabIndex = 11;
@@ -146,11 +147,22 @@
             modifyBookButton.UseVisualStyleBackColor = true;
             modifyBookButton.Click += modifyBookButton_Click;
             // 
+            // statisticsButton
+            // 
+            statisticsButton.Location = new Point(1048, 460);
+            statisticsButton.Name = "statisticsButton";
+            statisticsButton.Size = new Size(498, 58);
+            statisticsButton.TabIndex = 12;
+            statisticsButton.Text = "Statistics";
+            statisticsButton.UseVisualStyleBackColor = true;
+            statisticsButton.Click += statisticsButton_Click;
+            // 
             // LibraryManagementSystemForm
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1610, 601);
+            Controls.Add(statisticsButton);
             Controls.Add(modifyBookButton);
             Controls.Add(removeBookButton);
             Controls.Add(addBookButton);
@@ -178,5 +190,6 @@
         private DataGridViewTextBoxColumn QuantityBook;
         private DataGridViewTextBoxColumn LoanedQuantity;
         private Button modifyBookButton;
+        private Button statisticsButton;
     }
 }

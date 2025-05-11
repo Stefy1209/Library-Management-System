@@ -8,6 +8,7 @@ public sealed class Book : Entity<Guid>
     public IReadOnlyCollection<Author> Authors => _authors;
     public int Quantity { get; private set; }
     public int LoanedQuantity { get; private set; }
+    public Statistics Statistics { get; private set; } = null!;
     
     public Book() {}
     public Book(Guid id, string title, int quantity)
@@ -15,7 +16,8 @@ public sealed class Book : Entity<Guid>
         Id = id;
         SetTitle(title);
         SetQuantity(quantity);
-        LoanedQuantity = 0;       
+        LoanedQuantity = 0;
+        Statistics = new Statistics();
     }
     
     public void SetTitle(string title)
@@ -80,6 +82,7 @@ public sealed class Book : Entity<Guid>
             throw new InvalidOperationException("There are no more books left to loan.");
 
         LoanedQuantity++;
+        Statistics.Loaned();
     }
 
     public void LoanBooks(int amount)
@@ -89,6 +92,7 @@ public sealed class Book : Entity<Guid>
         if (LoanedQuantity > Quantity - amount)
             throw new InvalidOperationException("Amount cannot exceed the number of available books.");
         LoanedQuantity += amount;
+        Statistics.LoanedAmount(amount);
     }
     
     public void ReturnBook()

@@ -4,7 +4,7 @@
     <Compile Update="AddAuthor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="LybraryManagementSystemForm.cs">
+    <Compile Update="LibraryManagementSystemForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="AddBookForm.cs">
@@ -14,6 +14,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SearchBookForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="StatisticsForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

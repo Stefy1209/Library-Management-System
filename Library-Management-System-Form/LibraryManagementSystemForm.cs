@@ -104,10 +104,22 @@ namespace Library_Management_System_Form
                 MessageBox.Show(@"No book selected");
                 return;
             }
-            
+
             var modifyBookForm = new ModifyBookForm(_bookService, _authorService, book);
             modifyBookForm.ShowDialog();
             dataGridViewBooks.Refresh();
+        }
+
+        private void statisticsButton_Click(object sender, EventArgs e)
+        {
+            if (_booksBindingSource.Current is not Book book)
+            {
+                MessageBox.Show(@"No book selected");
+                return;
+            }
+
+            var statisticsForm = new StatisticsForm(book);
+            statisticsForm.ShowDialog();
         }
     }
 }

@@ -70,6 +70,26 @@ namespace Persistency.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("Model.Statistics", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("NrTimesLoaned")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId")
+                        .IsUnique();
+
+                    b.ToTable("Statistics");
+                });
+
             modelBuilder.Entity("AuthorBook", b =>
                 {
                     b.HasOne("Model.Author", null)
@@ -82,6 +102,23 @@ namespace Persistency.Migrations
                         .WithMany()
                         .HasForeignKey("BooksId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Model.Statistics", b =>
+                {
+                    b.HasOne("Model.Book", "Book")
+                        .WithOne("Statistics")
+                        .HasForeignKey("Model.Statistics", "BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("Model.Book", b =>
+                {
+                    b.Navigation("Statistics")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

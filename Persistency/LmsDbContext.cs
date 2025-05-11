@@ -13,5 +13,6 @@ public class LmsDbContext(DbContextOptions<LmsDbContext> options) : DbContext(op
     {
         modelBuilder.ApplyConfiguration(new BookConfiguration());
         modelBuilder.ApplyConfiguration(new AuthorConfiguration());
+        modelBuilder.ApplyConfiguration(new StatisticsConfiguration());
     }
 }
